@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 .vs/BidBay/v17/.suo
 .vs/BidBay/FileContentIndex/ac6d947e-bdfe-42a4-ab63-56a50597a273.vsidx
+src/AuctionService/obj/AuctionService.csproj.nuget.g.targets
