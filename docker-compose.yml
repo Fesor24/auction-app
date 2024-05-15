@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres
+    container_name: bidbay_db
+    restart: always
+    ports:
+     - 7721:5432
+    environment:
+     - POSTGRES_PASSWORD=bidbay
+    volumes:
+     - postgres_data:/var/lib/postgresql/data
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 8080:8080 
+ 
+     
+volumes:
+  postgres_data:
