@@ -1,6 +1,8 @@
 ﻿using AuctionService.Data;
 using AuctionService.Domain;
 using AuctionService.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Shared.Interfaces;
 
 namespace AuctionService.Repository;
 
@@ -11,7 +13,13 @@ public class AuctionRepository : GenericRepository<Auction>, IAuctionRepository
     public AuctionRepository(AuctionDbContext context): base(context)
     {
         _context = context;
+        UnitOfWork = context;
     }
 
-    public async Task<int> SaveChangesAsync() => await _context.CompleteAsync();
+    public IUnitOfWork UnitOfWork { get; set; }
+
+    public async Task<ICollection<Auction>> GetAuctions() =>
+        await _context.Auction
+        .Include(x => x.Item)
+        .ToListAsync();
 }
