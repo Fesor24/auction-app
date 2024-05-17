@@ -27,7 +27,6 @@
   <ItemGroup>
     <Folder Include="Features\Auction\Commands\Delete\" />
     <Folder Include="Features\Auction\Commands\Update\" />
-    <Folder Include="Features\Auction\Query\" />
   </ItemGroup>
 
 </Project>
