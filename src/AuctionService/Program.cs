@@ -1,3 +1,4 @@
+using AuctionService.Endpoints;
 using AuctionService.Extensions;
 using Serilog;
 
@@ -17,5 +18,7 @@ var app = builder.Build();
 app.MapGet("/", () => "Hello World!");
 
 app.UseSerilogRequestLogging();
+
+AuctionEndpoints.Register(app);
 
 app.Run();
