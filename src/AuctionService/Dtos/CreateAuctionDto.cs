@@ -5,7 +5,6 @@ namespace AuctionService.Dtos;
 public class CreateAuctionDto
 {
     public decimal ReservePrice { get; set; }
-    public string Seller { get; set; }
     public DateTime AuctionEnd { get; set; }
     public Status Status { get; set; }
     public string ItemTitle { get; set; }
