@@ -1,23 +1,27 @@
-﻿using AuctionService.Domain;
+﻿using AuctionService.Dtos;
 using AuctionService.Interfaces;
+using AutoMapper;
 using MediatR;
 using Shared.Response;
 
 namespace AuctionService.Features.Auction.Query.List;
 
-public record GetAuctionsQuery : IRequest<Result<ICollection<Domain.Auction>>>;
+public record GetAuctionsQuery : IRequest<Result<ICollection<GetAuctionDto>>>;
 
-internal sealed class GetAuctionsQueryHandler : IRequestHandler<GetAuctionsQuery, Result<ICollection<Domain.Auction>>>
+internal sealed class GetAuctionsQueryHandler : IRequestHandler<GetAuctionsQuery, Result<ICollection<GetAuctionDto>>>
 {
     private readonly IAuctionRepository _auctionRepository;
+    private readonly IMapper _mapper;
 
-    public GetAuctionsQueryHandler(IAuctionRepository auctionRepository)
+    public GetAuctionsQueryHandler(IAuctionRepository auctionRepository, IMapper mapper)
     {
         _auctionRepository = auctionRepository;
+        _mapper = mapper;
     }
 
-    public async Task<Result<ICollection<Domain.Auction>>> Handle(GetAuctionsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ICollection<GetAuctionDto>>> Handle(GetAuctionsQuery request, CancellationToken cancellationToken)
     {
-        return new Result<ICollection<Domain.Auction>>(await _auctionRepository.GetAuctions());
+        return new Result<ICollection<GetAuctionDto>>(
+            _mapper.Map<ICollection<GetAuctionDto>>(await _auctionRepository.GetAuctions()));
     }
 }
