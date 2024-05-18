@@ -1,10 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from pymongo import MongoClient
+from . import utils
 
-client = MongoClient(host='localhost', port=27017)
-db = client['search_auction']
-collection = db['search']
+collection = utils.get_db_handler()
 
 class MovieSearch(APIView):
     def get(self, request):
@@ -15,8 +13,8 @@ class MovieSearch(APIView):
     
     def post(self, request):
         auction = {
-            "title": "First Auction",
-            "description": "My first auction"
+            "title": "Second Auction",
+            "description": "My second auction"
         }
         collection.insert_one(auction)
         return Response({"data":"auction created"})
