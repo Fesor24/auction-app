@@ -5,7 +5,7 @@ from . import utils
 from . import serializers
 from .. import models
 
-collection = utils.get_db_handler()
+collection = utils.get_search_collection()
 
 class MovieSearch(APIView):
     def get(self, request):
