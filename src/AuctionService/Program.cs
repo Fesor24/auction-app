@@ -15,8 +15,6 @@ builder.Services.AddSerilog();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
-
 app.UseSerilogRequestLogging();
 
 AuctionEndpoints.Register(app);
