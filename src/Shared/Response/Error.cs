@@ -17,4 +17,14 @@ public class Error
 
     public string Code { get; set; }
     public string Message { get; set; }
+
+    public static NotFound NotFound(string code, string message) => new(code, message);
+}
+
+public class NotFound : Error
+{
+    public NotFound(string code, string message) : base(code, message)
+    {
+        
+    }
 }
