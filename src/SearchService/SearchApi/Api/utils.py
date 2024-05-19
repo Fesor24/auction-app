@@ -1,9 +1,9 @@
 from pymongo import MongoClient
 
-port = 27017
+uri = 'mongodb://root:bidbay_pw@localhost:7722/'
 
 def get_search_collection():
-    client = MongoClient(host='localhost', port=port)
+    client = MongoClient(uri)
     db = client['search_auction']
     collection = db['search']
     indexes = collection.index_information()
