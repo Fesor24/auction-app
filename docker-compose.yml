@@ -1,22 +1,16 @@
 services:
   postgres:
     image: postgres
-    container_name: bidbay_db
-    restart: always
-    ports:
-     - 7721:5432
-    environment:
-     - POSTGRES_PASSWORD=bidbay
-    volumes:
-     - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo
+    
+  mongo-express:
+    image: mongo-express  
   
   adminer:
     image: adminer
-    restart: always
-    container_name: bidbay_adminer
-    ports:
-    - 8080:8080 
- 
      
 volumes:
   postgres_data:
+  mongodata:  
