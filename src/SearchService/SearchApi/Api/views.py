@@ -7,7 +7,7 @@ from .. import models
 
 collection = utils.get_search_collection()
 
-class MovieSearch(APIView):
+class AuctionSearch(APIView):
     def get(self, request):
         page_number = request.GET.get('pageNumber', 1)
         page_size = request.GET.get('pageSize', 10)
@@ -41,7 +41,7 @@ class MovieSearch(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class MovieSearchItem(APIView):
+class AuctionSearchItem(APIView):
     def get(self, request, id):
         try:
             auction = collection.find_one({"auction_id": id})
