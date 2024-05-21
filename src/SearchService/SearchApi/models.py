@@ -3,10 +3,10 @@ from django.db import models
 # Create your models here.
 class Auction(models.Model):
     auction_id = models.CharField(max_length=70)
+    artist = models.CharField(max_length=60)
     title = models.CharField(max_length=70)
-    description = models.CharField(max_length=120)
     seller = models.CharField(max_length=50)
-    buyer = models.CharField(max_length=50, default='')
+    winner = models.CharField(max_length=50, default='')
     status = models.CharField(max_length=20, default='')
     reserve_price= models.DecimalField(decimal_places=2, max_digits=18)
     sold_amount = models.DecimalField(decimal_places=2, max_digits=18)
