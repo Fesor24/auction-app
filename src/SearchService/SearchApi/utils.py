@@ -1,12 +1,11 @@
 from pymongo import MongoClient
 import requests
 from datetime import datetime
-
-uri = 'mongodb://root:bidbay_pw@localhost:7722/'
-
+from django.conf import settings
 
 def get_search_collection():
-    client = MongoClient(uri)
+    connection_string = settings.MONGO_CONNECTION_STRING
+    client = MongoClient(connection_string)
     db = client['search_auction']
     collection = db['search']
     indexes = collection.index_information()
@@ -21,7 +20,8 @@ def load_db_data():
     collection = get_search_collection()
     if collection.count_documents({}) == 0:
         try:
-            response = requests.get('http://localhost:7000/api/auction/list')
+            auction_svc_base_url = settings.AUCTION_APP_BASE_URL
+            response = requests.get(f'{auction_svc_base_url}api/auction/list')
             response.raise_for_status()
         except requests.exceptions.HTTPError as err:
             print(f'An error occurred while sending request. Details: {err}')
