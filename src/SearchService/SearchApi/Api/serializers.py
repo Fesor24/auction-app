@@ -2,9 +2,6 @@ from rest_framework import serializers
 from .. import models
 from datetime import datetime
 from decimal import Decimal
-from uuid import UUID
-from bson import Binary
-import uuid
 
 class AuctionSerializer(serializers.ModelSerializer):
     class Meta:
