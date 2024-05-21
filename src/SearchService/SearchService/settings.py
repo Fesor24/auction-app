@@ -123,3 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUCTION_APP_BASE_URL = 'http://localhost:7000/'
+
+MONGO_CONNECTION_STRING = 'mongodb://root:bidbay_pw@localhost:7722/'
