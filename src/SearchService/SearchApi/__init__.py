@@ -1,0 +1,1 @@
+# default_app_cofig = 'SearchApi.Api.apps.SearchapiConfig'
