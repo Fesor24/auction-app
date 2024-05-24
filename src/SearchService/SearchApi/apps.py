@@ -5,6 +5,7 @@ class SearchapiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'SearchApi'
 
+    # we override this method to perform initializiation task
     def ready(self):
         import os
 
