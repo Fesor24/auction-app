@@ -6,7 +6,10 @@ services:
     image: mongo
     
   mongo-express:
-    image: mongo-express  
+    image: mongo-express
+    
+  rabbitmq:
+    image: rabbitmq:3-management-alpine  
   
   adminer:
     image: adminer
