@@ -18,7 +18,8 @@ public static class AuctionEndpoints
             var result = await sender.Send(new CreateAuctionCommand(auction));
 
             return result.Match
-                (val => Results.CreatedAtRoute("GetAuction", new { auctionId = val}, val), err => Results.BadRequest(err));
+                (auction => Results.CreatedAtRoute("GetAuction", new { auctionId = auction.Id}, auction), 
+                err => Results.BadRequest(err));
         });
 
         app.MapGet(ENDPOINT + "/list", async (ISender sender) =>
