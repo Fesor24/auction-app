@@ -33,6 +33,12 @@ services:
       ME_CONFIG_BASICAUTH: false
     depends_on:
      - mongo
+
+  rabbitmq:
+    container_name: bidbay_transport  
+    ports:
+     - 5672:5672
+     - 15672:15672 
     
   adminer:
      restart: always
