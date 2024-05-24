@@ -1,1 +1,1 @@
-# default_app_cofig = 'SearchApi.Api.apps.SearchapiConfig'
+# default_app_cofig = 'SearchApi.apps.SearchapiConfig'
