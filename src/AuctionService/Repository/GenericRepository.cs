@@ -5,11 +5,10 @@ using System.Linq.Expressions;
 
 namespace AuctionService.Repository;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity>(AuctionDbContext context) : 
+    IGenericRepository<TEntity> where TEntity : class
 {
-    private readonly AuctionDbContext _context;
-
-    public GenericRepository(AuctionDbContext context) => _context = context;
+    private readonly AuctionDbContext _context = context;
 
     public async Task AddAsync(TEntity entity) =>
         await _context.Set<TEntity>().AddAsync(entity);
