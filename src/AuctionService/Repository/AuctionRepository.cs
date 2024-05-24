@@ -6,20 +6,16 @@ using Shared.Interfaces;
 
 namespace AuctionService.Repository;
 
-public class AuctionRepository : GenericRepository<Auction>, IAuctionRepository
+public class AuctionRepository(AuctionDbContext context) : 
+    GenericRepository<Auction>(context), IAuctionRepository
 {
-    private readonly AuctionDbContext _context;
+    private readonly AuctionDbContext _context = context;
 
-    public AuctionRepository(AuctionDbContext context): base(context)
-    {
-        _context = context;
-        UnitOfWork = context;
-    }
-
-    public IUnitOfWork UnitOfWork { get; set; }
+    public IUnitOfWork UnitOfWork => _context;
 
     public async Task<ICollection<Auction>> GetAuctions() =>
         await _context.Auction
         .Include(x => x.Item)
+        .OrderByDescending(x => x.CreatedAt)
         .ToListAsync();
 }
