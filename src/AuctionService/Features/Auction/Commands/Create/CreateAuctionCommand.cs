@@ -1,12 +1,15 @@
 ﻿using AuctionService.Dtos;
 using AuctionService.Interfaces;
+using AutoMapper;
+using EventBus.Messages;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using Shared.Response;
 
 namespace AuctionService.Features.Auction.Commands.Create;
 
-internal record CreateAuctionCommand(CreateAuctionDto Auction) : IRequest<Result<Guid>>;
+internal record CreateAuctionCommand(CreateAuctionDto Auction) : IRequest<Result<GetAuctionDto>>;
 
 internal class CreateAuctionCommandValidator : AbstractValidator<CreateAuctionCommand>
 {
@@ -24,16 +27,15 @@ internal class CreateAuctionCommandValidator : AbstractValidator<CreateAuctionCo
     }
 }
 
-internal sealed class CreateAuctionCommandHandler : IRequestHandler<CreateAuctionCommand, Result<Guid>>
+internal sealed class CreateAuctionCommandHandler(IAuctionRepository auctionRepository, 
+    IPublishEndpoint publishEndpoint, IMapper mapper) : 
+    IRequestHandler<CreateAuctionCommand, Result<GetAuctionDto>>
 {
-    private readonly IAuctionRepository _auctionRepository;
+    private readonly IAuctionRepository _auctionRepository = auctionRepository;
+    private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
+    private readonly IMapper _mapper = mapper;
 
-    public CreateAuctionCommandHandler(IAuctionRepository auctionRepository)
-    {
-        _auctionRepository = auctionRepository;
-    }
-
-    public async Task<Result<Guid>> Handle(CreateAuctionCommand request, CancellationToken cancellationToken)
+    public async Task<Result<GetAuctionDto>> Handle(CreateAuctionCommand request, CancellationToken cancellationToken)
     {
         Domain.Auction auction = new()
         {
@@ -60,6 +62,10 @@ internal sealed class CreateAuctionCommandHandler : IRequestHandler<CreateAuctio
 
         await _auctionRepository.UnitOfWork.CompleteAsync();
 
-        return auction.Id;
+        var auctionDto = _mapper.Map<GetAuctionDto>(auction);
+
+        await _publishEndpoint.Publish(_mapper.Map<AuctionCreated>(auctionDto));
+
+        return auctionDto;
     }
 }
