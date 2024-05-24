@@ -2,7 +2,7 @@
 
 public class GetAuctionDto
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public decimal ReservePrice { get; set; }
     public string Seller { get; set; }
     public string Winner { get; set; }
