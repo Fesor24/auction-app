@@ -1,6 +1,7 @@
 ﻿using AuctionService.Data;
 using AuctionService.Interfaces;
 using AuctionService.Repository;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces;
 using System.Reflection;
@@ -16,6 +17,8 @@ public static class ApplicationServiceExtensions
         AddAutoMapper(services);
 
         AddDataAccess(services, config);
+
+        AddMessageTransport(services, config);
 
         return services;
     }
@@ -40,5 +43,18 @@ public static class ApplicationServiceExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         services.AddScoped<IAuctionRepository, AuctionRepository>();
+    }
+
+    private static void AddMessageTransport(IServiceCollection services, IConfiguration config)
+    {
+        services.AddMassTransit(opt =>
+        {
+            //opt.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("", false));
+
+            opt.UsingRabbitMq((ctx, cfg) =>
+            {
+                cfg.ConfigureEndpoints(ctx);
+            });
+        });
     }
 }
